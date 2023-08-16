@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    "atomic": "cpp",
+    "iomanip": "cpp",
+    "functional": "cpp",
+    "ios": "cpp",
+    "iosfwd": "cpp",
+    "iostream": "cpp"
+  }
+}
