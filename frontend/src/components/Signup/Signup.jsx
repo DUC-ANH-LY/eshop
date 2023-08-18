@@ -2,48 +2,48 @@ import { React, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../styles/styles";
 import { Link, useNavigate } from "react-router-dom";
-// import { RxAvatar } from "react-icons/rx";
-// import axios from "axios";
-// import { server } from "../../server";
-// import { toast } from "react-toastify";
+import { RxAvatar } from "react-icons/rx";
+import axios from "axios";
+import { server } from "../../server";
+import { toast } from "react-toastify";
 
 const Singup = () => {
-//   const [email, setEmail] = useState("");
-//   const [name, setName] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [visible, setVisible] = useState(false);
-//   const [avatar, setAvatar] = useState(null);
-//   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [visible, setVisible] = useState(false);
+  const [avatar, setAvatar] = useState(null);
+  const navigate = useNavigate();
 
-//   const handleFileInputChange = (e) => {
-//     const file = e.target.files[0];
-//     setAvatar(file);
-//   };
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+    setAvatar(file);
+  };
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     const config = { headers: { "Content-Type": "multipart/form-data" } };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
 
-//     const newForm = new FormData();
+    const newForm = new FormData();
+    newForm.append("file", avatar);
+    newForm.append("name", name);
+    newForm.append("email", email);
+    newForm.append("password", password);
 
-//     newForm.append("file", avatar);
-//     newForm.append("name", name);
-//     newForm.append("email", email);
-//     newForm.append("password", password);
-
-//     axios
-//       .post(`${server}/user/create-user`, newForm, config)
-//       .then((res) => {
-//         toast.success(res.data.message);
-//         setName("");
-//         setEmail("");
-//         setPassword("");
-//         setAvatar();
-//       })
-//       .catch((error) => {
-//         toast.error(error.response.data.message);
-//       });
-//   };
+    axios
+      .post(`${server}/user/create-user`, newForm, config)
+      .then((res) => {
+        toast.success(res.data.message);
+        setName("");
+        setEmail("");
+        setPassword("");
+        setAvatar();
+      })
+      .catch((error) => {
+          console.log(error)
+        // toast.error(error.response.data.message);
+      });
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -55,7 +55,7 @@ const Singup = () => {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6"
-        //    onSubmit={handleSubmit}
+           onSubmit={handleSubmit}
            >
             <div>
               <label
@@ -70,8 +70,8 @@ const Singup = () => {
                   name="text"
                   autoComplete="name"
                   required
-                //   value={name}
-                //   onChange={(e) => setName(e.target.value)}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
@@ -90,8 +90,8 @@ const Singup = () => {
                   name="email"
                   autoComplete="email"
                   required
-                //   value={email}
-                //   onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
@@ -106,28 +106,28 @@ const Singup = () => {
               </label>
               <div className="mt-1 relative">
                 <input
-                //   type={visible ? "text" : "password"}
+                  type={visible ? "text" : "password"}
                   name="password"
                   autoComplete="current-password"
                   required
-                //   value={password}
-                //   onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
                 {
-                // visible ? (
+                visible ? (
                   <AiOutlineEye
                     className="absolute right-2 top-2 cursor-pointer"
                     size={25}
-                    // onClick={() => setVisible(false)}
+                    onClick={() => setVisible(false)}
                   />
-                // ) : (
-                //   <AiOutlineEyeInvisible
-                //     className="absolute right-2 top-2 cursor-pointer"
-                //     size={25}
-                //     onClick={() => setVisible(true)}
-                //   />
-                // )
+                ) : (
+                  <AiOutlineEyeInvisible
+                    className="absolute right-2 top-2 cursor-pointer"
+                    size={25}
+                    onClick={() => setVisible(true)}
+                  />
+                )
                 }
               </div>
             </div>
@@ -139,7 +139,7 @@ const Singup = () => {
               ></label>
               <div className="mt-2 flex items-center">
                 <span className="inline-block h-8 w-8 rounded-full overflow-hidden">
-                  {/* {avatar ? (
+                  {avatar ? (
                     <img
                       src={URL.createObjectURL(avatar)}
                       alt="avatar"
@@ -147,7 +147,7 @@ const Singup = () => {
                     />
                   ) : (
                     <RxAvatar className="h-8 w-8" />
-                  )} */}
+                  )}
                 </span>
                 <label
                   htmlFor="file-input"
@@ -159,7 +159,7 @@ const Singup = () => {
                     name="avatar"
                     id="file-input"
                     accept=".jpg,.jpeg,.png"
-                    // onChange={handleFileInputChange}
+                    onChange={handleFileInputChange}
                     className="sr-only"
                   />
                 </label>
@@ -175,7 +175,7 @@ const Singup = () => {
               </button>
             </div>
             <div 
-            // className={`${styles.noramlFlex} w-full`}
+            className={`${styles.noramlFlex} w-full`}
             >
               <h4>Already have an account?</h4>
               <Link to="/login" className="text-blue-600 pl-2">
