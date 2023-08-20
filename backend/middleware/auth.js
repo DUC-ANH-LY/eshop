@@ -3,16 +3,18 @@ const catchAsyncErrors = require("./catchAsyncErrors");
 const jwt = require("jsonwebtoken");
 const User = require("../model/user");
 
-// exports.isAuthenticated = catchAsyncErrors(async (req, res, next) => {
-//   const { token } = req.cookies;
+console.log(exports)
 
-//   if (!token) {
-//     return next(new ErrorHandler("Please login to continue", 401));
-//   }
+exports.isAuthenticated = catchAsyncErrors(async (req, res, next) => {
+  const { token } = req.cookies;
 
-//   const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  if (!token) {
+    return next(new ErrorHandler("Please login to continue", 401));
+  }
 
-//   req.user = await User.findById(decoded.id);
+  const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-//   next();
-// });
+  req.user = await User.findById(decoded.id);
+
+  next();
+});
