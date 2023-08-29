@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
@@ -51,6 +51,7 @@ userSchema.methods.getJwtToken = function () {
     expiresIn: process.env.JWT_EXPIRES,
   });
 };
+
 // comapre password
 userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);

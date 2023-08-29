@@ -64,7 +64,7 @@ const CartSingle = ({ data }) => {
         <img src="https://bonik-react.vercel.app/assets/images/products/Fashion/Clothes/1.SilverHighNeckSweater.png" alt=""
         className="w-[80px] h-[80px] ml-2"
         />
-
+      
         <div className="pl-[5px]">
             <h1>{data.name}</h1>
             <h4 className="font-[600] text-[17px] pt-[3px] text-[#d02222] font-Roboto">

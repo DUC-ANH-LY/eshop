@@ -1,4 +1,4 @@
-import React ,{ useState } from "react";
+import { React, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../styles/styles";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,6 +14,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     await axios
       .post(
         `${server}/user/login-user`,
@@ -26,7 +27,7 @@ const Login = () => {
       .then((res) => {
         toast.success("Login Success!");
         navigate("/");
-        window.location.relaoad();
+        window.location.reload(true); 
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -42,9 +43,7 @@ const Login = () => {
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6" 
-          onSubmit={handleSubmit}
-          >
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="email"
@@ -96,12 +95,8 @@ const Login = () => {
                 )}
               </div>
             </div>
-            <div
-             className={`${styles.noramlFlex} justify-between`}
-             >
-              <div 
-              className={`${styles.noramlFlex}`}
-              >
+            <div className={`${styles.noramlFlex} justify-between`}>
+              <div className={`${styles.noramlFlex}`}>
                 <input
                   type="checkbox"
                   name="remember-me"
@@ -132,10 +127,7 @@ const Login = () => {
                 Submit
               </button>
             </div>
-            <div 
-            className=
-            {`${styles.noramlFlex} w-full`}
-            >
+            <div className={`${styles.noramlFlex} w-full`}>
               <h4>Not have any account?</h4>
               <Link to="/sign-up" className="text-blue-600 pl-2">
                 Sign Up
@@ -145,7 +137,6 @@ const Login = () => {
         </div>
       </div>
     </div>
-    
   );
 };
 

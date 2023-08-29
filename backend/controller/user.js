@@ -4,20 +4,18 @@ const User = require("../model/user");
 const router = express.Router();
 const { upload } = require("../multer");
 const ErrorHandler = require("../utils/ErrorHandler");
+const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
-const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const sendMail = require("../utils/sendMail");
 const sendToken = require("../utils/jwtToken");
 const { isAuthenticated } = require("../middleware/auth");
 
-// Create user
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
     const userEmail = await User.findOne({ email });
 
-    // if user exist
     if (userEmail) {
       const filename = req.file.filename;
       const filePath = `uploads/${filename}`;
@@ -29,8 +27,10 @@ router.post("/create-user", upload.single("file"), async (req, res, next) => {
       });
       return next(new ErrorHandler("User already exists", 400));
     }
+
     const filename = req.file.filename;
     const fileUrl = path.join(filename);
+
     const user = {
       name: name,
       email: email,
@@ -38,8 +38,6 @@ router.post("/create-user", upload.single("file"), async (req, res, next) => {
       avatar: fileUrl,
     };
 
-
-    // send token to email
     const activationToken = createActivationToken(user);
 
     const activationUrl = `http://localhost:3000/activation/${activationToken}`;
@@ -81,6 +79,8 @@ router.post(
         process.env.ACTIVATION_SECRET
       );
 
+      console.log(newUser)
+
       if (!newUser) {
         return next(new ErrorHandler("Invalid token", 400));
       }
@@ -97,6 +97,7 @@ router.post(
         avatar,
         password,
       });
+
       sendToken(user, 201, res);
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
@@ -157,5 +158,24 @@ router.get(
     }
   })
 );
- 
+
+// log out user
+router.get(
+  "/logout",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      res.cookie("token", null, {
+        expires: new Date(Date.now()),
+        httpOnly: true,
+      });
+      res.status(201).json({
+        success: true,
+        message: "Log out successful!",
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
 module.exports = router;
