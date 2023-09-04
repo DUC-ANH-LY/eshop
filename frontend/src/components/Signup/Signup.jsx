@@ -150,6 +150,7 @@ const Singup = () => {
                 >
                   <span>Upload a file</span>
                   <input
+                    required
                     type="file"
                     name="avatar"
                     id="file-input"
