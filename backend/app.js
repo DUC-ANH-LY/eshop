@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["http://localhost:3000","https://react-kazl.onrender.com/"],
+    origin: "https://react-kazl.onrender.com",
     credentials: true,
   })
 );
